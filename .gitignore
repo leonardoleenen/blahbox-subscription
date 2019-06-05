@@ -1,0 +1,3 @@
+node_modules
+.stencil
+package-lock.json
