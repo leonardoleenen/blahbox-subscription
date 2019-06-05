@@ -55,7 +55,6 @@ export class SuscriptionTable {
   }
 
   componentWillLoad() {
-
     const src = 'https://secure.avangate.com/checkout/client/twoCoInlineCart.js'
     const libName = 'TwoCoInlineCart'
     const config = {
@@ -82,7 +81,6 @@ export class SuscriptionTable {
   }
 
   render() {
-    console.log(this.monthlyBilling)
     return <div class=' flex container mx-auto font-sans font-light text-sm'>
       <div class=''>
         <button onClick={() => this.togglingBillingMonthly(true)}>Monthly</button>
