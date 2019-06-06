@@ -35255,3 +35255,31 @@ video {
     z-index: auto;
   }
 }
+
+.box1 {
+    background-color: #F2FCFB;
+}
+
+.box2 {
+    background-color:#CAE2EC;
+}
+
+.box3 {
+    background-color: #C6F0ED;
+}
+
+.box4 {
+    background-color: #B4E1E2;
+}
+
+.box5 {
+    background-color: #E9F7F5
+}
+
+.plan_name { 
+    color: #171D70
+}
+
+.price {
+    color: #3a897a
+}
