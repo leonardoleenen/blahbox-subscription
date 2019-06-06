@@ -1,4 +1,12 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h, State, Prop } from '@stencil/core';
+
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
+
+
 
 @Component({
   tag: 'suscription-table',
@@ -9,35 +17,49 @@ export class SuscriptionTable {
 
   plans = {
     standar: {
+      id: 'standard',
       price: 9.9
     },
     advance: {
+      id: 'advance',
       price: 19.90
     },
     premium: {
+      id: 'premium',
       price: 29.90
     }
   }
 
+  @Prop() nickName: string 
+  @Prop() email: string 
+  @Prop() userId: string 
+  @Prop() callbackUrl: string
+
   @State() monthlyBilling: boolean = true
+
+  
 
   togglingBillingMonthly(value) {
     this.monthlyBilling = value
   }
 
-  co() {
+  
+
+  
+  co(plan) {
     const TwoCoInlineCart = window['TwoCoInlineCart']
     TwoCoInlineCart.setup.setMerchant('250163802451'); // meter en variables de entorno
 
+    console.log(plan.id + (this.monthlyBilling ? 'M' : 'A'))
     TwoCoInlineCart.products.add({
-      code: 'standardM', // codigo de producto
+      code: plan.id + (this.monthlyBilling ? 'M' : 'A') , // codigo de producto
       quantity: 1 //siempre 1
 
     }); // add products to cart
 
     TwoCoInlineCart.billing.setData({
-      email: 'cabeza2@gmail.com', // debe tomar el mail que tenemos en el registro del usuario
-      name: 'John Doe' // debe tomar el nombre que tenemos en el registro del usuario
+      email: this.email, // debe tomar el mail que tenemos en el registro del usuario
+      name: this.nickName // debe tomar el nombre que tenemos en el registro del usuario
     });
 
     TwoCoInlineCart.cart.setLanguage('es'); //poner el lenguaje que tengamos del cliente o 'us' por default
@@ -48,7 +70,7 @@ export class SuscriptionTable {
          });  */
 
     TwoCoInlineCart.cart.setCurrency('USD'); //siempre USD
-    TwoCoInlineCart.cart.setOrderExternalRef('1231231'); //colocar el USERID
+    TwoCoInlineCart.cart.setOrderExternalRef(this.userId); //colocar el USERID
     TwoCoInlineCart.cart.setExternalCustomerReference('123extern'); 
 
     TwoCoInlineCart.cart.checkout();
@@ -102,11 +124,11 @@ export class SuscriptionTable {
         <div class="border-b pt-4 pb-1">Widgets/website<p class='uppercase pt-1 font-bold'>ilimitado</p></div>
         <div class="border-b pt-4 pb-1">Analytics (prox.) <span  class='uppercase pt-1 font-bold'> BÁSICO</span></div>
         <div class="border-b pt-4 pb-1">Colaboración  <span  class='uppercase pt-1 font-bold'> X</span></div>
-        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co()}>Subscribe</button>
+        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' >Join me</button>
       </div>
       <div class='flex-1  text-gray-700 text-center box2'>
         <p class='text-4xl plan_name  pt-4'>Standar</p>
-        <div class='price text-4xl pt-4'> $ {this.calculatePrice(this.plans.standar)}</div>
+        <div class='price text-4xl pt-4'> { formatter.format(this.calculatePrice(this.plans.standar))}</div>
         <div class="border-b pt-4"> por mes</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
@@ -120,11 +142,11 @@ export class SuscriptionTable {
         <div class="border-b pt-4 pb-1">Widgets/website<p class='uppercase pt-1 font-bold'>ilimitado</p></div>
         <div class="border-b pt-4 pb-1">Analytics (prox.) <span  class='uppercase pt-1 font-bold'> BÁSICO</span></div>
         <div class="border-b pt-4 pb-1">Colaboración  <span  class='uppercase pt-1 font-bold'> X</span></div>
-        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co()}>Subscribe</button>
+        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co(this.plans.standar)}>Subscribe</button>
       </div>
       <div class='flex-1 text-gray-700 text-center box3 '>
         <p class='text-4xl plan_name  pt-4'>Advance</p>
-        <div class='text-4xl price pt-4'> $ {this.calculatePrice(this.plans.advance)}</div>
+        <div class='text-4xl price pt-4'> {formatter.format(this.calculatePrice(this.plans.advance))}</div>
         <div  class="border-b pt-4"> por mes</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
@@ -138,11 +160,11 @@ export class SuscriptionTable {
         <div class="border-b pt-4 pb-1">Widgets/website<p class='uppercase pt-1 font-bold'>ilimitado</p></div>
         <div class="border-b pt-4 pb-1">Analytics (prox.) <span  class='uppercase pt-1 font-bold'> BÁSICO</span></div>
         <div class="border-b pt-4 pb-1">Colaboración  <span  class='uppercase pt-1 font-bold'> X</span></div>
-        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co()}>Subscribe</button>
+        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co(this.plans.advance)}>Subscribe</button>
       </div>
       <div class='flex-1 text-gray-700 text-center box4'>
         <p class='text-4xl plan_name  pt-4'>Premium</p>
-        <div  class='text-4xl price pt-4'> $ {this.calculatePrice(this.plans.premium)}</div>
+        <div  class='text-4xl price pt-4'> {formatter.format(this.calculatePrice(this.plans.premium))}</div>
         <div class="border-b pt-4"> por mes</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
@@ -156,10 +178,10 @@ export class SuscriptionTable {
         <div class="border-b pt-4 pb-1">Widgets/website<p class='uppercase pt-1 font-bold'>ilimitado</p></div>
         <div class="border-b pt-4 pb-1">Analytics (prox.) <span  class='uppercase pt-1 font-bold'> BÁSICO</span></div>
         <div class="border-b pt-4 pb-1">Colaboración  <span  class='uppercase pt-1 font-bold'> X</span></div>
-        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co()}>Subscribe</button>
+        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co(this.plans.premium)}>Subscribe</button>
       </div>
       <div class='flex-1 text-gray-700 text-center box5'>
-        <p class='text-4xl plan_name  pt-4'>Enterprice</p>
+        <p class='text-4xl plan_name  pt-4'>Enterprise</p>
         <div  class='text-4xl price pt-4'> CUSTOM</div>
         <div class="border-b pt-4"> por mes</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
@@ -174,7 +196,7 @@ export class SuscriptionTable {
         <div class="border-b pt-4 pb-1">Widgets/website<p class='uppercase pt-1 font-bold'>ilimitado</p></div>
         <div class="border-b pt-4 pb-1">Analytics (prox.) <span  class='uppercase pt-1 font-bold'> BÁSICO</span></div>
         <div class="border-b pt-4 pb-1">Colaboración  <span  class='uppercase pt-1 font-bold'> X</span></div>
-        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' onClick={() => this.co()}>Subscribe</button>
+        <button class='border-2 mt-4 mb-8 px-6 py-4 uppercase border-black' >Contact Us</button>
       </div>
     </div>
   }

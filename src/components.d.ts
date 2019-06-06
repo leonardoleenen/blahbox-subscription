@@ -23,7 +23,12 @@ export namespace Components {
     */
     'middle': string;
   }
-  interface SuscriptionTable {}
+  interface SuscriptionTable {
+    'callbackUrl': string;
+    'email': string;
+    'nickName': string;
+    'userId': string;
+  }
 }
 
 declare global {
@@ -61,7 +66,12 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
-  interface SuscriptionTable extends JSXBase.HTMLAttributes<HTMLSuscriptionTableElement> {}
+  interface SuscriptionTable extends JSXBase.HTMLAttributes<HTMLSuscriptionTableElement> {
+    'callbackUrl'?: string;
+    'email'?: string;
+    'nickName'?: string;
+    'userId'?: string;
+  }
 
   interface IntrinsicElements {
     'my-component': MyComponent;

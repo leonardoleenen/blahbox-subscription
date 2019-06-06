@@ -35255,6 +35255,11 @@ video {
     z-index: auto;
   }
 }
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
 
 .box1 {
     background-color: #F2FCFB;
