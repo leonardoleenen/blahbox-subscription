@@ -18,15 +18,15 @@ export class SuscriptionTable {
   plans = {
     standar: {
       id: 'standard',
-      price: 9.9
+      price: 29.90
     },
     advance: {
       id: 'advance',
-      price: 19.90
+      price: 99.90
     },
     premium: {
       id: 'premium',
-      price: 29.90
+      price: 99.90
     }
   }
 
@@ -47,16 +47,23 @@ export class SuscriptionTable {
 
   
   co(plan) {
+
+    if (!this.userId){
+      window.location.href = 'https://devback.blahbox.net/auth'
+      return
+    }
+    
+
     const TwoCoInlineCart = window['TwoCoInlineCart']
     TwoCoInlineCart.setup.setMerchant('250163802451'); // meter en variables de entorno
 
-    console.log(plan.id + (this.monthlyBilling ? 'M' : 'A'))
+    //console.log(plan.id + (this.monthlyBilling ? 'M' : 'A'))
     TwoCoInlineCart.products.add({
       code: plan.id + (this.monthlyBilling ? 'M' : 'A') , // codigo de producto
       quantity: 1 //siempre 1
-
     }); // add products to cart
 
+    
     TwoCoInlineCart.billing.setData({
       email: this.email, // debe tomar el mail que tenemos en el registro del usuario
       name: this.nickName // debe tomar el nombre que tenemos en el registro del usuario
@@ -111,7 +118,7 @@ export class SuscriptionTable {
       <div class='flex-1  text-gray-700 text-center box1'>
         <p class='text-4xl plan_name pt-4  pt-4'>Free</p>
         <div class='price text-4xl  pt-4'> $0</div>
-        <div class="border-b  pt-4 pb-1"> por mes</div>
+        <div class="border-b  pt-4 pb-1"> {this.monthlyBilling ? 'por mes' : 'año'}</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
         <div class="border-b pt-4 pb-1"> Chatbot Widgets <p class='uppercase pt-1 font-bold'>ilimitado</p></div>
@@ -129,7 +136,7 @@ export class SuscriptionTable {
       <div class='flex-1  text-gray-700 text-center box2'>
         <p class='text-4xl plan_name  pt-4'>Standar</p>
         <div class='price text-4xl pt-4'> { formatter.format(this.calculatePrice(this.plans.standar))}</div>
-        <div class="border-b pt-4"> por mes</div>
+        <div class="border-b pt-4">{this.monthlyBilling ? 'por mes' : 'año'}</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
         <div class="border-b pt-4 pb-1"> Chatbot Widgets <p class='uppercase pt-1 font-bold'>ilimitado</p></div>
@@ -147,7 +154,7 @@ export class SuscriptionTable {
       <div class='flex-1 text-gray-700 text-center box3 '>
         <p class='text-4xl plan_name  pt-4'>Advance</p>
         <div class='text-4xl price pt-4'> {formatter.format(this.calculatePrice(this.plans.advance))}</div>
-        <div  class="border-b pt-4"> por mes</div>
+        <div  class="border-b pt-4"> {this.monthlyBilling ? 'por mes' : 'año'}</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
         <div class="border-b pt-4 pb-1"> Chatbot Widgets <p class='uppercase pt-1 font-bold'>ilimitado</p></div>
@@ -165,7 +172,7 @@ export class SuscriptionTable {
       <div class='flex-1 text-gray-700 text-center box4'>
         <p class='text-4xl plan_name  pt-4'>Premium</p>
         <div  class='text-4xl price pt-4'> {formatter.format(this.calculatePrice(this.plans.premium))}</div>
-        <div class="border-b pt-4"> por mes</div>
+        <div class="border-b pt-4"> {this.monthlyBilling ? 'por mes' : 'año'}</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
         <div class="border-b pt-4 pb-1"> Chatbot Widgets <p class='uppercase pt-1 font-bold'>ilimitado</p></div>
@@ -183,7 +190,7 @@ export class SuscriptionTable {
       <div class='flex-1 text-gray-700 text-center box5'>
         <p class='text-4xl plan_name  pt-4'>Enterprise</p>
         <div  class='text-4xl price pt-4'> CUSTOM</div>
-        <div class="border-b pt-4"> por mes</div>
+        <div class="border-b pt-4"> {this.monthlyBilling ? 'por mes' : 'año'}</div>
         <div class="border-b pt-4 pb-1"> <p>Periodo de pruebas</p><p  class='uppercase pt-1 font-bold'>Ilimitado</p></div>
         <div  class="border-b pt-4 pb-1" > Mensajes/Mes <span  class='uppercase pt-1 font-bold'> 500 </span></div>
         <div class="border-b pt-4 pb-1"> Chatbot Widgets <p class='uppercase pt-1 font-bold'>ilimitado</p></div>
