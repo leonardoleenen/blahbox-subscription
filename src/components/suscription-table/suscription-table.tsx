@@ -33,8 +33,6 @@ export class SuscriptionTable {
   @Prop() nickName: string 
   @Prop() email: string 
   @Prop() userId: string 
-  @Prop() callbackUrl: string
-
   @State() monthlyBilling: boolean = true
 
   
